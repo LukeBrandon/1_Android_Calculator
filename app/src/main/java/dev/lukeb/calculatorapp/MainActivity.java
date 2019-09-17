@@ -188,9 +188,14 @@ public class MainActivity extends AppCompatActivity {
         clearError();
         if(numberFieldData.size()  > 1){
             Term firstTerm = (Term) numberFieldData.get(0);
+            ExpressionComponent lastComponent = numberFieldData.get(numberFieldData.size() - 1);
             double result = firstTerm.toDouble();
 
-            // Starts at 2 because the first term is always a number, then the next 2 are operator and term and continues
+            if(lastComponent.isOperator()){
+                errorField.setText("Expressions should not end with an Operator");
+                return;
+            }
+
             for(int i = 2; i < numberFieldData.size(); i+=2) {
                 Operator op = (Operator) numberFieldData.get(i -1);
                 Term term = (Term) numberFieldData.get(i);
