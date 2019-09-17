@@ -23,6 +23,10 @@ public class Term extends ExpressionComponent {
         return value;
     }
 
+    public Double toDouble(){
+        return Double.parseDouble(this.value);
+    }
+
     @Override
     public void append(String toAppend){
         this.value += toAppend;

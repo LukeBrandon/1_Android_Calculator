@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
             toDisplay += numberFieldData.get(i).toString();
         }
         numberField.setText(toDisplay);
-       // if(numberFieldData.size() > 0 && numberFieldData.get(numberFieldData.size()-1).isTerm())
-          //  System.out.println(Double.parseDouble(numberFieldData.get(numberFieldData.size()-1).toString()));
     }
 
     public void displayHistory(ArrayList<ExpressionComponent> list){
@@ -162,21 +160,23 @@ public class MainActivity extends AppCompatActivity {
             // Starts at 2 because the first term is always a number, then the next 2 are operator and term and continues
             for(int i = 2; i < numberFieldData.size(); i+=2) {
                 Operator op = (Operator) numberFieldData.get(i -1);
-                Double term;
+                Term term = (Term) numberFieldData.get(i);
+
+                Double doubleTerm;
                 try {
-                    term = Double.parseDouble(numberFieldData.get(i).toString());
+                    doubleTerm = term.toDouble();
                 } catch(Exception e) {
-                    errorField.setText("Invald input");
+                    errorField.setText("Invalid input");
                     return;
                 }
                 if (op.isAdd()) {
-                    result += term;
+                    result += doubleTerm;
                 } else if (op.isSubtract()) {
-                    result -= term;
+                    result -= doubleTerm;
                 } else if (op.isMultiply()) {
-                    result *= term;
+                    result *= doubleTerm;
                 } else if (op.isDivide()) {
-                    result /= term;
+                    result /= doubleTerm;
                 } else {
                     errorField.setText("Error evaluating the solution, was your input valid?");
                     throw new RuntimeException("Error evaluating the solution");
