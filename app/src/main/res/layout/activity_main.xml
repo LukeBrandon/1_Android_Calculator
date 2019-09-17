@@ -14,11 +14,20 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/errorField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:height="50dp"
+            android:layout_span="4"
+            />
+
+        <TextView
             android:id="@+id/historyField"
             android:gravity="right|bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="200dp">
+            android:height="175dp">
         </TextView>
 
         <TextView
@@ -36,7 +45,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:paddingTop="20dp"
-        android:stretchColumns="*">
+        android:stretchColumns="*"
+        >
 
         <TableRow
             android:layout_width="match_parent"
@@ -253,20 +263,6 @@
                 android:text="="
                 tools:layout_editor_absoluteX="31dp"
                 tools:layout_editor_absoluteY="569dp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/errorField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:height="300dp"
-                android:layout_span="4"
-                />
 
         </TableRow>
 
