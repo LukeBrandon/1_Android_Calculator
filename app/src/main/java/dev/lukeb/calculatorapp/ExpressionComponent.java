@@ -12,8 +12,8 @@ public abstract class ExpressionComponent {
 
     public boolean contains(String toCheck){  return false;   }
 
-    public void append(String toAppend){   }
+    public void append(String toAppend){ throw new RuntimeException("Cannot append to operations"); }
 
-    public void backspace(){  System.out.println("Backspace method not supported for this object");  }
+    public void backspace(){  throw new RuntimeException("Backspace is not supported on this object"); }
 
 }

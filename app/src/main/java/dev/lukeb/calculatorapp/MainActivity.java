@@ -20,18 +20,21 @@ public class MainActivity extends AppCompatActivity {
     TextView historyField;
     ArrayList<ExpressionComponent> numberFieldData;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         numberFieldData = new ArrayList<>();
-        numberField = (TextView) findViewById(R.id.numberField);
-        errorField = (TextView) findViewById(R.id.errorField);
-        historyField = (TextView) findViewById(R.id.historyField);
+        numberField = findViewById(R.id.numberField);
+        errorField = findViewById(R.id.errorField);
+        historyField = findViewById(R.id.historyField);
     }
 
+    /*
+        * Displays what is in numberFieldData in the numberField
+        *       - Done every time a change is made to numberFieldData
+     */
     public void display(){
         String toDisplay = "";
         for(int i = 0; i < numberFieldData.size(); i++){
@@ -40,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         numberField.setText(toDisplay);
     }
 
+    /*
+        * Displays the expression into the historyField
+        *       - Done when '=' is pressed
+     */
     public void displayHistory(ArrayList<ExpressionComponent> list){
         String toDisplay = "";
         for(int i = 0; i < list.size(); i++){
@@ -48,10 +55,15 @@ public class MainActivity extends AppCompatActivity {
         historyField.setText(toDisplay);
     }
 
+    /*
+        * Handles number button clicks
+        *       - Reads the value of the button from the tag on the UI element
+        *       - If the last thing in the numberFieldData is a Term, then append to the Term
+        *       - If the last thing in the numberFieldData is an Operator, then start a new Term with value from tag
+     */
     public void buttonNumberClick(View view){
         clearError();
 
-        // The tag on the UI element contains the value
         String num = view.getTag().toString();
 
         ExpressionComponent lastThing;
@@ -67,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        //If previous ExpressionComponent or nothing, then start a new term
         if(lastThing == null || lastThing.isOperator()){
             numberFieldData.add(new Term(num));
         } else {
@@ -77,7 +88,12 @@ public class MainActivity extends AppCompatActivity {
         display();
     }
 
-    // Operations
+    /*
+        * This method handles all the button clicks of the operators
+        *       - Reads the operator off of the tag on the UI element
+        *       - Create operator objects and adds them to the numberFieldData depending on which button in pressed
+        *           - Does not create operator if the last ExpressionComponent is another operator or a negative term with no value
+     */
     public void buttonOperationClick(View view){
         clearError();
 
@@ -90,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ExpressionComponent previousComponent = numberFieldData.get(numberFieldData.size() - 1);
-        if(!previousComponent.isOperator()) {
+        if(!previousComponent.isOperator() && !previousComponent.isEmpty() ) {
             if (operation.equals("plus")) {
                 numberFieldData.add(new Operator(OperatorType.ADD));
             } else if (operation.equals("subtract")) {
@@ -135,6 +151,11 @@ public class MainActivity extends AppCompatActivity {
         display();
     }
 
+    /*
+        * Handles the negative button
+        *       - If last ExpressionComponent is a term, then add a negative at the beginning
+        *       - If last ExpressionComponent is an operate, then start a new term with "-"
+     */
     public void buttonPosNegClick(View view){
         clearError();
 
@@ -152,10 +173,19 @@ public class MainActivity extends AppCompatActivity {
         display();
     }
 
+    /*
+        * Handles the equal button
+        *       - First ExpressionComponent always a Term, initialize result to first Component
+        *       - If error converting the Term to a double then don't do operation and throw error
+        *       - Loops through numberFieldData by 2 because every other ExpressionComponent will be a Term then Operator
+        *           - Use i-1 as the operator b/c will always be an operator
+        *           - Use i as the Term b/c will always be the term and do the operation on the result
+     */
     public void buttonEqualsClick(View view){
         clearError();
         if(numberFieldData.size()  > 1){
-            double result = Double.parseDouble(numberFieldData.get(0).toString());
+            Term firstTerm = (Term) numberFieldData.get(0);
+            double result = firstTerm.toDouble();
 
             // Starts at 2 because the first term is always a number, then the next 2 are operator and term and continues
             for(int i = 2; i < numberFieldData.size(); i+=2) {
@@ -193,6 +223,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+        * Clears the error field on the UI
+     */
     public void clearError(){
         this.errorField.setText("");
     }

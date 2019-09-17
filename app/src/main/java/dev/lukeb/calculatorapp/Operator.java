@@ -1,9 +1,15 @@
 package dev.lukeb.calculatorapp;
 
+/*
+    * OperatorType defines the different types of Operators that are supported by the calculator
+ */
 enum OperatorType{
     ADD, SUBTRACT, MULTIPLY, DIVIDE
 }
 
+/*
+    * The Operator class is used to store and manipulate operators that are added to the numberFieldData
+ */
 public class Operator extends ExpressionComponent{
     OperatorType type;
 
@@ -39,21 +45,17 @@ public class Operator extends ExpressionComponent{
     }
 
     public String toString(){
-        if(isAdd()){
+        if(this.isAdd()){
             return "+";
-        } else if (isSubtract()) {
+        } else if (this.isSubtract()) {
             return "-";
-        } else if (isMultiply()) {
+        } else if (this.isMultiply()) {
             return "*";
-        } else if (isDivide()) {
+        } else if (this.isDivide()) {
             return "/";
         } else {
             return "?";
         }
-    }
-
-    public void append(int toAppend){
-        throw new RuntimeException("Cannot append to operations");
     }
 
 }
