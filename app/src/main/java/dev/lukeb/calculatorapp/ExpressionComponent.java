@@ -1,5 +1,9 @@
 package dev.lukeb.calculatorapp;
 
+/*
+    * The ExpressionComponent class is an abstract class that Term and Operator both inherit form
+    *       - Includes methods that both Terms and Operators need and their default values
+ */
 public abstract class ExpressionComponent {
 
     public abstract String toString();

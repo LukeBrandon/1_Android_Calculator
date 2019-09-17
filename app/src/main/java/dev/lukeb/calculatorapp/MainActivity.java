@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
         display();
     }
 
+    /*
+        * Clears all of the fields on the screen
+     */
     public void buttonClearClick(View view){
         clearError();
         numberFieldData.clear();

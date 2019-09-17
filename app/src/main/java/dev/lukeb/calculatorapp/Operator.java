@@ -13,14 +13,20 @@ enum OperatorType{
 public class Operator extends ExpressionComponent{
     OperatorType type;
 
-
     public Operator(OperatorType operatorType){
         type = operatorType;
     }
 
+    /*
+        * Overrides the isOperator() method from ExpressionComponent that is false by default
+     */
     @Override
     public boolean isOperator(){    return true;    }
 
+    /*
+        * Evaluates if the Operator object is empty or not
+        * Return: Boolean
+     */
     @Override
     public boolean isEmpty(){
         if(this.type == null)
@@ -28,22 +34,30 @@ public class Operator extends ExpressionComponent{
         return false;
     }
 
-    boolean isAdd(){
+    /*
+        * The following 'is' methods return if the Operator is of that type or not
+        * Return: Boolean
+     */
+    public boolean isAdd(){
         return  type == OperatorType.ADD;
     }
 
-    boolean isSubtract(){
+    public boolean isSubtract(){
         return  type == OperatorType.SUBTRACT;
     }
 
-    boolean isMultiply(){
+    public boolean isMultiply(){
         return  type == OperatorType.MULTIPLY;
     }
 
-    boolean isDivide(){
+    public boolean isDivide(){
         return  type == OperatorType.DIVIDE;
     }
 
+    /*
+        * Returns the String value of each operator
+        * Return: String
+     */
     public String toString(){
         if(this.isAdd()){
             return "+";
