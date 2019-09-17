@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         if(numberFieldData.size()  > 1){
             double result = Double.parseDouble(numberFieldData.get(0).toString());
 
+            // Starts at 2 because the first term is always a number, then the next 2 are operator and term and continues
             for(int i = 2; i < numberFieldData.size(); i+=2) {
                 Operator op = (Operator) numberFieldData.get(i -1);
                 Term term = (Term) numberFieldData.get(i);

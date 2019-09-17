@@ -15,18 +15,20 @@
 
         <TextView
             android:id="@+id/historyField"
-            android:gravity="center"
-            android:layout_width="wrap_content"
+            android:gravity="right|bottom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="100dp">
+            android:height="200dp">
         </TextView>
 
         <TextView
             android:id="@+id/numberField"
-            android:gravity="center"
-            android:layout_width="wrap_content"
+            android:gravity="right|bottom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="200dp">
+            android:textSize="32dp"
+            android:textColor="@color/colorPrimary"
+            android:height="50dp">
         </TextView>
 
     <TableLayout
