@@ -165,10 +165,10 @@ public class MainActivity extends AppCompatActivity {
         if(numberFieldData.size() > 0) {
             ExpressionComponent lastComponent = numberFieldData.get(numberFieldData.size() - 1);
             if (lastComponent.isOperator()) {
-                numberFieldData.add(new Term("-"));
+                numberFieldData.add(new Term("").withNegative(true));
             } else {
                 Term prev = (Term) lastComponent;
-                prev.negate();
+                prev.negate(); // ERROR: Repeated negations crashes, term needs to be deleted
             }
         } else {
             numberFieldData.add(new Term("-"));

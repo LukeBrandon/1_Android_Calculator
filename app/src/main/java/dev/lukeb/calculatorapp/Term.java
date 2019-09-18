@@ -6,6 +6,7 @@ package dev.lukeb.calculatorapp;
 public class Term extends ExpressionComponent {
 
     public String value;
+    public boolean negative;
 
     public Term(String val){
         value = val;
@@ -58,11 +59,23 @@ public class Term extends ExpressionComponent {
     }
 
     /*
+        * Sets the negative member variable
+        * Return: this (this allows the withNegative() method to be called inline)
+     */
+    public Term withNegative(boolean neg){
+        this.negative = neg;
+        return this;
+    }
+
+    /*
         * Returns the string value of the Term
         * Return: String
      */
     public String toString(){
-        return value;
+        if(this.negative)
+            return "-" + value;
+        else
+            return value;
     }
 
     /*
@@ -70,7 +83,10 @@ public class Term extends ExpressionComponent {
         * Return: Double
      */
     public Double toDouble(){
-        return Double.parseDouble(this.value);
+        if(this.negative)
+            return Double.parseDouble("-" + this.value);
+        else
+            return Double.parseDouble(this.value);
     }
 
     /*
@@ -79,11 +95,15 @@ public class Term extends ExpressionComponent {
         *   - If positive, makes negative
      */
     public void negate(){
-        if (value.charAt(0) == '-') {
-            this.value = this.value.substring(1);
-        } else {
-            this.value = "-" + this.value;
-        }
+        if (this.negative)
+            this.negative = false;
+        else
+            this.negative = true;
+//        if (value.charAt(0) == '-' && this.value.length() > 1) {
+//            this.value = this.value.substring(1);
+//        } else {
+//            this.value = "-" + this.value;
+//        }
     }
 
 }
