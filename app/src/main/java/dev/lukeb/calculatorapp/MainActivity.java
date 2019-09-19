@@ -4,14 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(lastThing == null || lastThing.isOperator()){
-            numberFieldData.add(new Term(num));
+                numberFieldData.add(new Term(num));
         } else {
             numberFieldData.get(numberFieldData.size() - 1).append(num);
         }
@@ -128,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
       * If there is not any terms in the data then done do anything
       * Checks if the previous component is an operator or term:
       *     - if operator, it is deleted.
-      *     - if a term, then it does the backspace operation, which delete the last character.
+      *     - if a term, then it does the backspace operation, which delete the last character or if
+      *            its empty and not negative, then it is deleted (should not delete negative empty value).
      */
     public void buttonBackClick(View view){
         if(numberFieldData.size() == 0) { return; }
@@ -137,8 +134,9 @@ public class MainActivity extends AppCompatActivity {
         if(lastComponent.isOperator()){
             numberFieldData.remove(numberFieldData.size() - 1);
         } else {
-            lastComponent.backspace();
-            if(lastComponent.isEmpty())
+            Term termLastComponent = (Term) lastComponent;
+            termLastComponent.backspace();
+            if(termLastComponent.isEmpty() && termLastComponent.negative == false)
                 numberFieldData.remove(numberFieldData.size() - 1);
         }
         display();
@@ -156,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         * Handles the negative button
-        *       - If last ExpressionComponent is a term, then add a negative at the beginning
+        *       - If last ExpressionComponent is a term, then add new term that is negative
         *       - If last ExpressionComponent is an operate, then start a new term with "-"
      */
     public void buttonPosNegClick(View view){
@@ -165,13 +163,13 @@ public class MainActivity extends AppCompatActivity {
         if(numberFieldData.size() > 0) {
             ExpressionComponent lastComponent = numberFieldData.get(numberFieldData.size() - 1);
             if (lastComponent.isOperator()) {
-                numberFieldData.add(new Term("").withNegative(true));
+                numberFieldData.add(new Term().withNegative(true));
             } else {
                 Term prev = (Term) lastComponent;
-                prev.negate(); // ERROR: Repeated negations crashes, term needs to be deleted
+                prev.negate();
             }
         } else {
-            numberFieldData.add(new Term("-"));
+            numberFieldData.add(new Term().withNegative(true));
         }
         display();
     }
@@ -228,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
         numberFieldData.add(new Term(df.format(result)));
 
         display();
+        } else {
+            errorField.setText("There is nothing to evaluate there...");
         }
     }
 

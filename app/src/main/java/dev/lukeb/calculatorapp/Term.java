@@ -1,5 +1,7 @@
 package dev.lukeb.calculatorapp;
 
+import java.text.DecimalFormat;
+
 /*
     * The Term class is used to store and operate on terms that are added to numberFieldData
  */
@@ -8,9 +10,21 @@ public class Term extends ExpressionComponent {
     public String value;
     public boolean negative;
 
+    /*
+        * Constructor that initializes the value of the Term
+        *       - Should not be able to have term of value "." because it causes Double.parseDouble() to break in the toString() method
+     */
     public Term(String val){
-        value = val;
+        if(val.equals("."))
+            this.value = "0.";
+        else
+            this.value = val;
     }
+
+    /*
+        * Default constructor, initializes a term to empty string
+     */
+    public Term(){ this.value = "";}
 
     /*
         * Overrides the isTerm() method on ExpressionComponent that returns false by default
@@ -24,19 +38,22 @@ public class Term extends ExpressionComponent {
      */
     @Override
     public boolean isEmpty(){
-        if(this.value.length() == 0 || this.value.equals("-"))
-            return true;
-        return false;
+        return (this.value.isEmpty());
     }
 
     /*
         * Performs a backspace
-        *   - Resets the value of the Term to be the previous value of the Term without the last character
+        *   - If length of value is 0 and is negative, then set negative to false, this effectively
+        *          will backspace the negative sign that shows up when toString()
+        *   - If value is not empty Resets the value of the Term to be the previous value of the
+        *          Term without the last character
      */
     @Override
     public void backspace(){
-        System.out.println("backspace method called");
-        this.value = this.value.substring(0, value.length()-1);
+        if(this.negative && this.value.isEmpty())
+            this.negative = false;
+        if(!this.value.isEmpty())
+            this.value = this.value.substring(0, value.length()-1);
     }
 
     /*
@@ -45,9 +62,7 @@ public class Term extends ExpressionComponent {
      */
     @Override
     public boolean contains(String toCheck){
-        if(this.value.contains(toCheck))
-            return true;
-        return false;
+        return(this.value.contains(toCheck));
     }
 
     /*
@@ -69,9 +84,21 @@ public class Term extends ExpressionComponent {
 
     /*
         * Returns the string value of the Term
-        * Return: String
+        * Number is displayed in scientific notation if needed
+        * Return: String, either in scientific notation or not
      */
     public String toString(){
+
+        if(!this.value.isEmpty() && Double.parseDouble(this.value) > 10000000.0){
+            DecimalFormat scientific = new DecimalFormat("0.#######E0");
+
+            if(this.negative){
+                return "-" + scientific.format(this.toDouble());
+            } else {
+                return scientific.format(this.toDouble());
+            }
+        }
+
         if(this.negative)
             return "-" + value;
         else
@@ -99,11 +126,6 @@ public class Term extends ExpressionComponent {
             this.negative = false;
         else
             this.negative = true;
-//        if (value.charAt(0) == '-' && this.value.length() > 1) {
-//            this.value = this.value.substring(1);
-//        } else {
-//            this.value = "-" + this.value;
-//        }
     }
 
 }
