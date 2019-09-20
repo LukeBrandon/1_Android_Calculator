@@ -89,7 +89,7 @@ public class Term extends ExpressionComponent {
      */
     public String toString(){
 
-        if(!this.value.isEmpty() && Double.parseDouble(this.value) > 10000000.0){
+        if(!this.value.isEmpty() && (Double.parseDouble(this.value) > 10000000.0 || (Double.parseDouble(this.value) < 0.000001 && Double.parseDouble(this.value) > 0.0))){
             DecimalFormat scientific = new DecimalFormat("0.#######E0");
 
             if(this.negative){
