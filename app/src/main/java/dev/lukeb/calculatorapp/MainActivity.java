@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ExpressionComponent previousComponent = numberFieldData.get(numberFieldData.size() - 1);
+
         if(!previousComponent.isOperator() && !previousComponent.isEmpty() ) {
             if (operation.equals("plus")) {
                 numberFieldData.add(new Operator(OperatorType.ADD));
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
       * Checks if the previous component is an operator or term:
       *     - if operator, it is deleted.
       *     - if a term, then it does the backspace operation, which delete the last character or if
-      *            its empty and not negative, then it is deleted (should not delete negative empty value).
+      *            it's empty and non-negative, then it is deleted (should not delete negative empty value).
      */
     public void buttonBackClick(View view){
         if(numberFieldData.size() == 0) { return; }
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-        * Clears all of the fields on the screen
+        * Clears all of the fields on the screen and data in the numberFieldData
      */
     public void buttonClearClick(View view){
         clearError();
