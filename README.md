@@ -1,2 +1,5 @@
 # 1_Android_Calculator
-Calculator app for Mobile Programming course at the University of Arkansas.
+Author: Luke Brandon
+Professor: Alexander Nelson
+Course: CSCE 4623
+University of Arkansas Computer Science
